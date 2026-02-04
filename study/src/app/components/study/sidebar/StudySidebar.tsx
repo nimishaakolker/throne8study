@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 
 import FilterModal from "./FilterModal";
-import CreateGroupModal from "./CreateModal";
+import CreateGroupModal from "../modals/CreateModal";
 
 import {
   Home,
@@ -114,7 +114,8 @@ const StudySidebar = () => {
   return (
     <>
       {/* SIDEBAR */}
-      <aside className="fixed left-0 top-0 h-screen w-64 md:w-72 bg-[#f7f3ee] p-6 shadow-sm">
+      <aside className="fixed left-0 top-0 h-screen w-64  bg-[#f7f3ee] p-6 shadow-sm hidden md:block">
+
         <h2 className="text-4xl font-bold text-[#4a3728] mb-10">Throne8</h2>
 
         {sidebarSections.map((section, index) => (
