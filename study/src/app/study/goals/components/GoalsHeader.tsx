@@ -16,19 +16,19 @@ const CircularProgress: React.FC<CircularProgressProps> = ({ progress, color }) 
   const offset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className="relative w-24 h-24">
-      <svg className="transform -rotate-90" width="96" height="96">
+    <div className="relative w-20 h-20 md:w-24 md:h-24">
+      <svg className="transform -rotate-90 w-full h-full">
         <circle
-          cx="48"
-          cy="48"
+          cx="50%"
+          cy="50%"
           r={radius}
           stroke="#e5e7eb"
           strokeWidth="8"
           fill="none"
         />
         <circle
-          cx="48"
-          cy="48"
+          cx="50%"
+          cy="50%"
           r={radius}
           stroke={color}
           strokeWidth="8"
@@ -40,7 +40,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({ progress, color }) 
         />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-lg font-bold" style={{ color }}>
+        <span className="text-base md:text-lg font-bold" style={{ color }}>
           {progress}%
         </span>
       </div>
@@ -131,30 +131,30 @@ const GoalHeader: React.FC<GoalHeaderProps> = ({
   };
 
   return (
-    <section className="p-6 md:p-8 max-w-7xl mx-auto">
+    <section className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
       {/* Header Title */}
-      <div className="mb-6 mt-10">
-        <div className="text-center mb-8">
-          <h2 className="text-5xl mb-4 font-extrabold text-[#4a3728]">
+      <div className="mb-4 md:mb-6 mt-4 md:mt-10">
+        <div className="text-center mb-6 md:mb-8">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl mb-3 md:mb-4 font-extrabold text-[#4a3728]">
             Your Weekly Routine
           </h2>
-          <p className="text-lg font-serif text-[#6b5847]">
+          <p className="text-base md:text-lg font-serif text-[#6b5847] px-4">
             Monitor your goals and stay consistent every week
           </p>
         </div>
         
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8 max-w-5xl mx-auto">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 max-w-5xl mx-auto">
           {/* Left Side: Create Goal */}
-          <div className="text-center md:text-left">
-            <p className="text-sm text-[#6b5847] mb-3">
+          <div className="text-center md:text-left w-full md:w-auto">
+            <p className="text-sm text-[#6b5847] mb-2 md:mb-3">
               Add up to 5 goals and track them weekly 🌱
             </p>
-            <p className="text-xs font-bold text-[#4a3728] mb-4 italic">
+            <p className="text-xs font-bold text-[#4a3728] mb-3 md:mb-4 italic">
               💡 Drag goal cards to the weekly grid below to schedule them
             </p>
  
             <button
-              className="bg-gradient-to-r from-[#4a3728] to-[#8b7355] hover:from-[#6b4e3d] hover:to-[#4a3728] text-[#f6ede8] px-8 py-3 rounded-lg font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full md:w-auto bg-gradient-to-r from-[#4a3728] to-[#8b7355] hover:from-[#6b4e3d] hover:to-[#4a3728] text-[#f6ede8] px-6 md:px-8 py-3 rounded-lg font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={openCreateModal}
             >
               + Create Goal
@@ -162,18 +162,18 @@ const GoalHeader: React.FC<GoalHeaderProps> = ({
           </div>
 
           {/* Right Side: Progress + Premium */}
-          <div className="flex flex-col items-end gap-3">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-col items-center md:items-end gap-3 w-full md:w-auto">
+            <div className="flex items-center gap-3 md:gap-4 w-full md:w-auto justify-center md:justify-start">
               <CircularProgress progress={progress} color="#4a3728" />
 
-              <div>
-                <h3 className="font-semibold text-[#4a3728]">
+              <div className="text-center md:text-left">
+                <h3 className="font-semibold text-[#4a3728] text-sm md:text-base">
                   Progress This Week
                 </h3>
-                <p className="text-sm text-[#6b5847]">
+                <p className="text-xs md:text-sm text-[#6b5847]">
                   {totalGoals === 0 
-                    ? "Add goals to track your progress"
-                    : `${completedGoals} of ${totalGoals} goals completed`
+                    ? "Add goals to track"
+                    : `${completedGoals} of ${totalGoals} completed`
                   }
                 </p>
               </div>
@@ -181,7 +181,7 @@ const GoalHeader: React.FC<GoalHeaderProps> = ({
 
             {/* Premium Button */}
             <button
-              className="bg-gradient-to-r items-center from-[#4a3728] to-[#8b7355] hover:from-[#6b4e3d] hover:to-[#4a3728] text-[#f6ede8] px-6 py-3 rounded-lg font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-300"
+              className="w-full md:w-auto bg-gradient-to-r items-center from-[#4a3728] to-[#8b7355] hover:from-[#6b4e3d] hover:to-[#4a3728] text-[#f6ede8] px-6 py-3 rounded-lg font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-300"
             >
               ✨ Unlock Premium
             </button>

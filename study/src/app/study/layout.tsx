@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import Link from "next/link";
 import StudySidebar from "../components/study/sidebar/StudySidebar";
 
 export default function StudyLayout({
@@ -8,14 +7,17 @@ export default function StudyLayout({
   children: ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen">
-
-     <StudySidebar/>
-      {/* Main Content */}
-      <main className="ml-0 md:ml-64 flex-1">
+    <div className="min-h-screen bg-[#f7f3ee]">
+      {/* Sidebar - fixed, no scrollbar */}
+      <StudySidebar />
+      
+      {/* Main Content - this scrolls, not the sidebar */}
+      <main className="min-h-screen
+        ml-0 lg:ml-72
+        pt-16 lg:pt-0
+      ">
         {children}
       </main>
-
     </div>
   );
 }
