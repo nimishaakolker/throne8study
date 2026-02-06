@@ -12,7 +12,7 @@ export default function StudyLayout({
 
      <StudySidebar/>
       {/* Main Content */}
-      <main className="ml-64 pt-6 px-6 flex-1">
+      <main className="ml-0 md:ml-64 flex-1">
         {children}
       </main>
 

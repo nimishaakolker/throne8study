@@ -32,7 +32,9 @@ import {
   Maximize,
   Minimize,
   ChevronLeft,
-  Info
+  Info,
+  Play,
+  Pause
 } from "lucide-react";
 
 // Types
@@ -80,10 +82,11 @@ const GroupRoom: React.FC<GroupRoomProps> = ({ groupId }) => {
   const [isMicOn, setIsMicOn] = useState<boolean>(false);
   const [isScreenSharing, setIsScreenSharing] = useState<boolean>(false);
   const [showChat, setShowChat] = useState<boolean>(true);
-  const [showMembers, setShowMembers] = useState<boolean>(true);
+  const [showMembers, setShowMembers] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const [studyTime, setStudyTime] = useState<number>(0);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const [isSessionActive, setIsSessionActive] = useState<boolean>(false);
 
   // Mock group data - In production, fetch this based on groupId
   const [groupData, setGroupData] = useState<GroupData>({
@@ -175,14 +178,20 @@ const GroupRoom: React.FC<GroupRoomProps> = ({ groupId }) => {
     }
   ]);
 
-  // Timer effect
+  // Timer effect - only runs when session is active
   useEffect(() => {
-    const timer = setInterval(() => {
-      setStudyTime(prev => prev + 1);
-    }, 1000);
+    let timer: NodeJS.Timeout | null = null;
+    
+    if (isSessionActive) {
+      timer = setInterval(() => {
+        setStudyTime(prev => prev + 1);
+      }, 1000);
+    }
 
-    return () => clearInterval(timer);
-  }, []);
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [isSessionActive]);
 
   // Format time
   const formatTime = (seconds: number): string => {
@@ -213,11 +222,15 @@ const GroupRoom: React.FC<GroupRoomProps> = ({ groupId }) => {
     }
   };
 
+  const handleToggleSession = (): void => {
+    setIsSessionActive(!isSessionActive);
+  };
+
   return (
-    <div className="fixed inset-0 bg-linear-to-br from-[#f6ede8] to-[#e0d8cf] flex flex-col z-50">
+    <div className="fixed inset-0 bg-gradient-to-br from-[#f6ede8] to-[#e0d8cf] flex flex-col z-50">
       {/* Header - Fixed */}
-      <div className="bg-white border-b-2 border-[#e0d8cf] px-6 py-4 shadow-sm shrink-0">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="bg-white border-b-2 border-[#e0d8cf] px-4 py-4 shadow-sm shrink-0">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button
               onClick={() => router.push('/study/my-groups')}
@@ -242,7 +255,14 @@ const GroupRoom: React.FC<GroupRoomProps> = ({ groupId }) => {
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-[#4a3728]">{formatTime(studyTime)}</div>
+                <div className="flex items-center gap-2">
+                  <div className={`text-2xl font-bold ${isSessionActive ? 'text-green-600' : 'text-[#4a3728]'}`}>
+                    {formatTime(studyTime)}
+                  </div>
+                  {isSessionActive && (
+                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                  )}
+                </div>
                 <div className="text-xs text-[#6b5847]">Session Time</div>
               </div>
               <div className="text-center">
@@ -256,6 +276,27 @@ const GroupRoom: React.FC<GroupRoomProps> = ({ groupId }) => {
             </div>
 
             <div className="flex gap-3">
+              <button
+                onClick={handleToggleSession}
+                className={`px-4 py-2 rounded-lg font-semibold transition-all flex items-center gap-2 ${
+                  isSessionActive
+                    ? 'bg-amber-500 hover:bg-amber-600 text-white'
+                    : 'bg-green-500 hover:bg-green-600 text-white'
+                }`}
+              >
+                {isSessionActive ? (
+                  <>
+                    <Pause size={18} />
+                    Pause Session
+                  </>
+                ) : (
+                  <>
+                    <Play size={18} />
+                    Start Session
+                  </>
+                )}
+              </button>
+
               <button
                 onClick={() => router.push(`/study/my-groups/${groupId}/chat`)}
                 className="px-4 py-2 bg-[#8b7355] hover:bg-[#6b5847] text-white rounded-lg font-semibold transition-all flex items-center gap-2"
@@ -282,7 +323,7 @@ const GroupRoom: React.FC<GroupRoomProps> = ({ groupId }) => {
         <div className="flex-1 p-6 overflow-y-auto">
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
             {/* Self Video */}
-            <div className="relative aspect-video bg-linear-to-br from-[#8b7355] to-[#6b5847] rounded-xl overflow-hidden border-4 border-[#8b7355] shadow-xl">
+            <div className="relative aspect-video bg-gradient-to-br from-[#8b7355] to-[#6b5847] rounded-xl overflow-hidden border-4 border-[#8b7355] shadow-xl">
               <div className="absolute inset-0 flex items-center justify-center">
                 {isCameraOn ? (
                   <div className="text-6xl">👤</div>
@@ -293,7 +334,7 @@ const GroupRoom: React.FC<GroupRoomProps> = ({ groupId }) => {
                   </div>
                 )}
               </div>
-              <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/70 to-transparent p-3">
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
                 <div className="flex items-center justify-between">
                   <span className="text-white font-semibold text-sm">You</span>
                   <div className="flex gap-1">
@@ -312,13 +353,19 @@ const GroupRoom: React.FC<GroupRoomProps> = ({ groupId }) => {
               <div className="absolute top-3 left-3 px-2 py-1 bg-red-500 rounded-full text-xs font-bold text-white">
                 LIVE
               </div>
+              {isSessionActive && (
+                <div className="absolute top-3 right-3 px-2 py-1 bg-green-500 rounded-full text-xs font-bold text-white flex items-center gap-1">
+                  <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                  ACTIVE
+                </div>
+              )}
             </div>
 
             {/* Other Members */}
             {members.filter(m => m.isOnline).map((member) => (
               <div
                 key={member.id}
-                className={`relative aspect-video bg-linear-to-br from-[#4a3728] to-[#6b5847] rounded-xl overflow-hidden shadow-lg ${
+                className={`relative aspect-video bg-gradient-to-br from-[#4a3728] to-[#6b5847] rounded-xl overflow-hidden shadow-lg ${
                   member.isSpeaking ? 'ring-4 ring-green-500' : 'border-2 border-[#e0d8cf]'
                 }`}
               >
@@ -332,7 +379,7 @@ const GroupRoom: React.FC<GroupRoomProps> = ({ groupId }) => {
                     </div>
                   )}
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/70 to-transparent p-3">
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
                   <div className="flex items-center justify-between">
                     <span className="text-white font-semibold text-sm">{member.name}</span>
                     <div className="flex gap-1">
@@ -491,7 +538,7 @@ const GroupRoom: React.FC<GroupRoomProps> = ({ groupId }) => {
 
       {/* Bottom Controls - Fixed */}
       <div className="bg-white border-t-2 border-[#e0d8cf] px-6 py-4 shrink-0">
-        <div className="max-w-7xl mx-auto flex items-center justify-center gap-4">
+        <div className="flex items-center justify-center gap-4">
           <button
             onClick={() => setIsMicOn(!isMicOn)}
             className={`w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg ${
@@ -499,6 +546,7 @@ const GroupRoom: React.FC<GroupRoomProps> = ({ groupId }) => {
                 ? 'bg-[#8b7355] hover:bg-[#6b5847] text-white'
                 : 'bg-red-500 hover:bg-red-600 text-white'
             }`}
+            title={isMicOn ? "Mute" : "Unmute"}
           >
             {isMicOn ? <Mic size={24} /> : <MicOff size={24} />}
           </button>
@@ -510,47 +558,43 @@ const GroupRoom: React.FC<GroupRoomProps> = ({ groupId }) => {
                 ? 'bg-[#8b7355] hover:bg-[#6b5847] text-white'
                 : 'bg-red-500 hover:bg-red-600 text-white'
             }`}
+            title={isCameraOn ? "Turn off camera" : "Turn on camera"}
           >
             {isCameraOn ? <Video size={24} /> : <VideoOff size={24} />}
           </button>
 
           <button
-            onClick={() => setIsScreenSharing(!isScreenSharing)}
-            className={`w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg ${
-              isScreenSharing
-                ? 'bg-[#8b7355] hover:bg-[#6b5847] text-white'
-                : 'bg-[#f6ede8] hover:bg-[#e0d8cf] text-[#4a3728]'
-            }`}
-          >
-            {isScreenSharing ? <Monitor size={24} /> : <MonitorOff size={24} />}
-          </button>
-
-          <button
-            onClick={() => setShowChat(!showChat)}
+            onClick={() => {
+              setShowChat(!showChat);
+              if (showMembers && !showChat) {
+                setShowMembers(false);
+              }
+            }}
             className={`w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg ${
               showChat
                 ? 'bg-[#8b7355] text-white'
                 : 'bg-[#f6ede8] hover:bg-[#e0d8cf] text-[#4a3728]'
             }`}
+            title="Toggle chat"
           >
             <MessageCircle size={24} />
           </button>
 
           <button
-            onClick={() => setShowMembers(!showMembers)}
+            onClick={() => {
+              setShowMembers(!showMembers);
+              if (showChat && !showMembers) {
+                setShowChat(false);
+              }
+            }}
             className={`w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg ${
               showMembers
                 ? 'bg-[#8b7355] text-white'
                 : 'bg-[#f6ede8] hover:bg-[#e0d8cf] text-[#4a3728]'
             }`}
+            title="Toggle members"
           >
             <Users size={24} />
-          </button>
-
-          <button
-            className="w-14 h-14 rounded-full bg-[#f6ede8] hover:bg-[#e0d8cf] text-[#4a3728] flex items-center justify-center transition-all shadow-lg"
-          >
-            <Settings size={24} />
           </button>
         </div>
       </div>

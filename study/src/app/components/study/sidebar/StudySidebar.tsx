@@ -84,7 +84,7 @@ const StudySidebar = () => {
         },
         {
           name: "Goals",
-          path: "/study/habits",
+          path: "/study/goals",
           icon: <Star size={18} />,
         },
         {
@@ -104,7 +104,7 @@ const StudySidebar = () => {
         },
         {
           name: "Dashboard",
-          path: "/student/dashboard",
+          path: "/student-dashboard",
           icon: <Users size={18} />,
         },
       ],
