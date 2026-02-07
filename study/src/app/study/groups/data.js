@@ -74,7 +74,7 @@ const groups = [
     rank: 4
   },
   {
-    id: 4,
+    id: 5,
     title: "Language Skills Booster",
     description:
       "Improve your spoken and professional language skills.\n" +
@@ -92,7 +92,7 @@ const groups = [
     rank: 4
   },
   {
-    id: 5,
+    id: 6,
     title: "Language Skills Booster",
     description:
       "Improve your spoken and professional language skills.\n" +
@@ -110,7 +110,43 @@ const groups = [
     rank: 4
   },
   {
-    id: 6,
+    id: 7,
+    title: "Language Skills Booster",
+    description:
+      "Improve your spoken and professional language skills.\n" +
+      "Daily practice sessions with peer interaction.\n" +
+      "Helpful for interviews, group discussions, and confidence building.",
+    cameraOn: false,
+    goalHours: 6,
+    attendanceRequired: false,
+    attendanceAvg: 91,
+    leader: "Neha Singh",
+    visibility: "public",
+    category: "College",
+    capacity: 20,
+    members: 10,
+    rank: 4
+  },
+   {
+    id: 8,
+    title: "Language Skills Booster",
+    description:
+      "Improve your spoken and professional language skills.\n" +
+      "Daily practice sessions with peer interaction.\n" +
+      "Helpful for interviews, group discussions, and confidence building.",
+    cameraOn: false,
+    goalHours: 6,
+    attendanceRequired: false,
+    attendanceAvg: 91,
+    leader: "Neha Singh",
+    visibility: "public",
+    category: "Placement Preparation",
+    capacity: 20,
+    members: 10,
+    rank: 4
+  },
+  {
+    id: 9,
     title: "Language Skills Booster",
     description:
       "Improve your spoken and professional language skills.\n" +

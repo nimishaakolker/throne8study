@@ -70,7 +70,7 @@ function TodoModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-3 sm:p-4">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center mt-5 z-50 p-3 sm:p-4">
       <div className="bg-white rounded-xl sm:rounded-2xl shadow-2xl max-w-lg w-full max-h-[85vh] sm:max-h-[80vh] overflow-y-auto">
         <div className="sticky top-0 bg-white border-b border-gray-200 p-3 sm:p-4 flex justify-between items-start sm:items-center rounded-t-xl sm:rounded-t-2xl">
           <div className="flex items-start sm:items-center gap-2 flex-1 pr-2">

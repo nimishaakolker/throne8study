@@ -41,7 +41,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
   const isFilling = (group.members / group.capacity) > 0.7;
 
   return (
-    <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-gray-200 hover:border-[#d4a574]">
+    <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-200 hover:border-[#d4a574]">
       {/* Decorative top bar */}
       <div className="h-1 bg-gradient-to-r from-[#4a3728] via-[#8b6f47] to-[#d4a574]" />
 

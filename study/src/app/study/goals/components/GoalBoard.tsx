@@ -32,9 +32,7 @@ const GoalBoard: React.FC<GoalBoardProps> = ({
       {goals.length === 0 ? (
         <div className="text-center py-8 md:py-12 px-4">
           <div className="max-w-md mx-auto">
-            <div className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-3 md:mb-4 rounded-full bg-[#f6ede8] flex items-center justify-center">
-              <span className="text-3xl md:text-4xl">🎯</span>
-            </div>
+          
             <h3 className="text-base md:text-lg lg:text-xl font-bold text-[#4a3728] mb-2">
               No goals yet
             </h3>

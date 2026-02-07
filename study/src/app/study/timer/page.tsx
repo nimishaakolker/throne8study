@@ -18,7 +18,7 @@ const PomodoroTimer: React.FC = () => {
   const router = useRouter();
   
   const [activeTab, setActiveTab] = useState<string>('pomodoro');
-  const [minutes, setMinutes] = useState<number>(1);
+  const [minutes, setMinutes] = useState<number>(25);
   const [seconds, setSeconds] = useState<number>(0);
   const [isActive, setIsActive] = useState<boolean>(false);
   const [subject, setSubject] = useState<string>('');
@@ -281,7 +281,7 @@ const PomodoroTimer: React.FC = () => {
             {/* Subject Input */}
             <div className="bg-linear-to-r from-[#e0d8cf]/60 to-[#e0d8cf]/40 rounded-lg sm:rounded-xl p-3 sm:p-4 mb-4 sm:mb-6 border border-[#e0d8cf]/50 relative">
               <label className="block text-xs font-bold text-[#4a3728]/70 uppercase tracking-wider mb-1.5">
-                {isBreakMode ? 'Break Time' : 'Subject (Optional)'}
+                {isBreakMode ? 'Break Time' : 'Subject'}
               </label>
               {isBreakMode ? (
                 <div className="w-full bg-[#f6ede8] text-[#4a3728] text-sm font-semibold px-3 py-2 rounded-lg border border-[#e0d8cf]/50 text-center">
@@ -309,7 +309,7 @@ const PomodoroTimer: React.FC = () => {
                 <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                 </svg>
-                <span className="hidden xs:inline">Todo</span>
+                <span className="hidden lg:inline">Todo</span>
               </button>
 
               {/* Start/Pause Button */}
@@ -342,7 +342,7 @@ const PomodoroTimer: React.FC = () => {
                 <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                 </svg>
-                <span className="hidden xs:inline">Reset</span>
+                <span className="hidden lg:inline">Reset</span>
               </button>
             </div>
           </div>

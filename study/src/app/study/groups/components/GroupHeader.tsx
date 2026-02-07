@@ -3,98 +3,135 @@ import React from 'react';
 
 const GroupHeader = () => {
   return (
-    <div className="relative overflow-hidden">
-      <section className="max-w-7xl mx-auto bg-gradient-to-br from-[#f6ede8] via-[#e0d8cf] to-[#f6ede8] shadow-lg">
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-center justify-between px-6 py-6  relative">
-          {/* Floating accents */}
-          <div className="absolute top-12 left-6 sm:left-12 w-24 h-24 bg-[#8b7355]/20 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-12 right-6 sm:right-20 w-32 h-32 bg-[#6b5847]/15 rounded-full blur-3xl animate-pulse delay-150" />
+    <div className="relative overflow-hidden py-4 sm:py-6 lg:py-8">
+      {/* Background decorative elements */}
+      {/* <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-[#8b7355]/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#6b5847]/10 rounded-full blur-3xl animate-pulse delay-700" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#4a3728]/5 rounded-full blur-3xl" />
+      </div> */}
 
-          {/* Left – Text + Search + Stats */}
-          <div className="flex flex-col gap-4 max-w-xl z-10">
-            <div className="space-y-3">
-              <div className="inline-block bg-gradient-to-r from-[#8b7355]/20 to-[#6b5847]/20 px-3 py-1 rounded-full backdrop-blur-sm">
-                <span className="text-[#4a3728] font-semibold text-xs">🎓 Discover & Learn Together</span>
+      <section className="max-w-7xl mx-auto relative">
+        {/* Main glassmorphism container */}
+        <div className="backdrop-blur-2xl bg-white/40 border-2 border-white/60 rounded-3xl shadow-xs overflow-hidden">
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-center justify-between px-6 sm:px-8 lg:px-10 py-6 sm:py-8 lg:py-10 relative">
+            
+            {/* Floating accent bubbles */}
+            <div className="absolute top-8 left-12 w-20 h-20 bg-gradient-to-br from-[#8b7355]/20 to-[#6b5847]/20 rounded-full blur-2xl animate-pulse" />
+            <div className="absolute bottom-16 right-16 w-28 h-28 bg-gradient-to-tl from-[#6b5847]/15 to-[#8b7355]/15 rounded-full blur-2xl animate-pulse delay-300" />
+
+            {/* Left – Text + Search + Stats */}
+            <div className="flex flex-col gap-4 max-w-xl z-10 w-full lg:w-1/2">
+              <div className="space-y-3">
+                {/* Badge */}
+                <div className="inline-flex items-center gap-2 backdrop-blur-xl bg-gradient-to-r from-[#8b7355]/20 to-[#6b5847]/20 px-4 py-2 rounded-full border border-white/40 shadow-lg">
+                  <span className="text-2xl">🎓</span>
+                  <span className="text-[#4a3728] font-bold text-xs sm:text-sm">Discover & Learn Together</span>
+                </div>
+
+                {/* Heading */}
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#4a3728] leading-tight">
+                  Find Your{' '}
+                  <span className="block sm:inline bg-gradient-to-r from-[#6b5847] via-[#8b7355] to-[#6b5847] bg-clip-text text-transparent animate-gradient">
+                    Study Group
+                  </span>
+                </h1>
+
+                {/* Subtitle */}
+                <p className="text-sm sm:text-base text-[#6b5847] font-medium leading-relaxed">
+                  Connect with passionate learners, collaborate on projects, and reach your academic goals together.
+                </p>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#4a3728] leading-tight">
-                Find Your <br />
-                <span className="bg-gradient-to-r from-[#6b5847] to-[#8b7355] bg-clip-text text-transparent">
-                  Study Group
-                </span>
-              </h1>
-
-              <p className="text-sm sm:text-base text-[#6b5847] font-medium">
-                Connect with passionate learners, collaborate, and reach your academic goals together.
-              </p>
-            </div>
-
-            {/* Search + Button */}
-            <div className="flex flex-col sm:flex-row gap-2">
-              <input
-                type="text"
-                placeholder="Search study groups by topic, university, subject..."
-                className="flex-1 px-4 py-2.5 rounded-full bg-white/80 backdrop-blur-sm text-[#4a3728] border-2 border-[#e0d8cf] focus:border-[#8b7355] focus:ring-2 focus:ring-[#8b7355]/30 outline-none transition-all placeholder:text-[#6b5847]/60 shadow-sm text-sm"
-              />
-              <button className="bg-gradient-to-r from-[#8b7355] to-[#6b5847] hover:from-[#6b5847] hover:to-[#4a3728] text-[#f6ede8] px-6 py-2.5 rounded-full font-bold shadow-lg hover:shadow-xl transition-all hover:scale-105 whitespace-nowrap text-sm mt-2 sm:mt-0">
-                Explore Groups
-              </button>
-            </div>
-
-            {/* Stats */}
-            <div className="flex flex-wrap sm:flex-nowrap gap-5 text-center mt-4">
-              <div>
-                <div className="text-xl sm:text-2xl font-bold text-[#4a3728]">500+</div>
-                <div className="text-xs text-[#6b5847]">Active Groups</div>
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl font-bold text-[#4a3728]">10K+</div>
-                <div className="text-xs text-[#6b5847]">Members</div>
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl font-bold text-[#4a3728]">50+</div>
-                <div className="text-xs text-[#6b5847]">Subjects</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right – Video / Thumbnail Card */}
-          <div className="relative w-full lg:w-1/2 max-w-lg z-10 mt-8 lg:mt-0">
-            <div className="relative bg-gradient-to-br from-[#4a3728] to-[#6b5847] p-2 rounded-3xl shadow-2xl">
-              <div className="bg-[#2a1f18] rounded-2xl overflow-hidden aspect-video group relative cursor-pointer">
-                <Image
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80"
-                  alt="Study group"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#4a3728]/80 via-[#4a3728]/30 to-transparent" />
-
-                {/* Play button on hover */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <button className="bg-white/90 hover:bg-white text-[#4a3728] w-16 h-16 rounded-full flex items-center justify-center shadow-xl transform group-hover:scale-110 transition-transform">
-                    <svg className="w-7 h-7 ml-1" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z" />
+              {/* Search + Button */}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <div className="flex-1 relative group">
+                  <input
+                    type="text"
+                    placeholder="Search by topic, university, subject..."
+                    className="w-full px-5 py-3.5 rounded-2xl backdrop-blur-xl bg-white/70 text-[#4a3728] border-2 border-white/60 focus:border-[#8b7355] focus:bg-white/90 outline-none transition-all placeholder:text-[#6b5847]/60 shadow-lg hover:shadow-xl text-sm font-medium"
+                  />
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[#8b7355] opacity-50 group-focus-within:opacity-100 transition-opacity">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
-                  </button>
+                  </div>
                 </div>
+                <button className="backdrop-blur-xl bg-gradient-to-r from-[#8b7355] to-[#6b5847] hover:from-[#6b5847] hover:to-[#4a3728] text-white px-8 py-3.5 rounded-2xl font-bold shadow-xl hover:shadow-2xl transition-all hover:scale-105 whitespace-nowrap text-sm border border-white/20">
+                  Explore Groups
+                </button>
+              </div>
 
-                {/* Bottom overlay text */}
-                <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <h3 className="text-white font-bold text-lg">How to Use Study Groups</h3>
-                  <p className="text-white/80 text-sm">2-minute guide</p>
-                </div>
+              {/* Stats with glassmorphism */}
+              <div className="flex flex-wrap gap-3 mt-2">
+                {[
+                  { value: '500+', label: 'Active Groups' },
+                  { value: '10K+', label: 'Members' },
+                  { value: '50+', label: 'Subjects' }
+                ].map((stat, index) => (
+                  <div 
+                    key={index}
+                    className="backdrop-blur-xl bg-white/50 px-5 py-3 rounded-xl border border-white/60 shadow-lg hover:shadow-xl transition-all hover:scale-105 cursor-pointer"
+                  >
+                    <div className="text-2xl sm:text-3xl font-extrabold bg-gradient-to-r from-[#4a3728] to-[#8b7355] bg-clip-text text-transparent">
+                      {stat.value}
+                    </div>
+                    <div className="text-xs sm:text-sm text-[#6b5847] font-semibold whitespace-nowrap">
+                      {stat.label}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* Small live badge */}
-            <div className="absolute -bottom-4 -right-4 bg-white/90 backdrop-blur-sm px-5 py-3 rounded-xl shadow-xl border border-[#e0d8cf] flex items-center gap-3 text-sm">
-              <div className="relative">
-                <div className="w-3.5 h-3.5 bg-green-500 rounded-full animate-pulse" />
+            {/* Right – Video Card with Glassmorphism */}
+            <div className="relative w-full lg:w-1/2 max-w-lg z-10">
+              {/* Outer glow effect */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-[#8b7355]/20 to-[#6b5847]/20 rounded-3xl blur-2xl" />
+              
+              {/* Main video card */}
+              <div className="relative backdrop-blur-2xl bg-gradient-to-br from-[#4a3728]/90 to-[#6b5847]/90 p-3 rounded-3xl shadow-2xl border-2 border-white/20">
+                <div className="bg-gradient-to-br from-[#2a1f18] to-[#1a140f] rounded-2xl overflow-hidden aspect-video group relative cursor-pointer">
+                  <Image
+                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80"
+                    alt="Study group collaboration"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  
+                  {/* Gradient overlays */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#8b7355]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  {/* Play button */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <div className="backdrop-blur-xl bg-white/95 hover:bg-white text-[#4a3728] w-20 h-20 rounded-full flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-all border-4 border-white/50">
+                      <svg className="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Bottom info overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 backdrop-blur-sm bg-gradient-to-t from-black/60 to-transparent">
+                    <h3 className="text-white font-bold text-lg mb-1">How to Use Study Groups</h3>
+                    <div className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
+                      <p className="text-white/90 text-sm font-medium">2-minute guide</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div>
-                <span className="font-bold text-[#4a3728]">250+</span>{' '}
-                <span className="text-[#6b5847]">Studying Now</span>
+
+              {/* Live status badge with glassmorphism */}
+              <div className="absolute -bottom-4 -right-4 backdrop-blur-2xl bg-white/80 px-6 py-4 rounded-2xl shadow-2xl border-2 border-white/60 flex items-center gap-3">
+                <div className="relative">
+                  <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse" />
+                  <div className="absolute inset-0 w-4 h-4 bg-green-500 rounded-full animate-ping opacity-75" />
+                </div>
+                <div className="text-sm">
+                  <span className="font-extrabold text-[#4a3728] text-lg">250+</span>{' '}
+                  <span className="text-[#6b5847] font-semibold">Studying Now</span>
+                </div>
               </div>
             </div>
           </div>

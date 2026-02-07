@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
-import { Trophy, ChevronLeft, ChevronRight, TrendingUp, Users, Award } from "lucide-react";
+import { TrendingUp, Users, Award } from "lucide-react";
 
 /* ===================== DATA ===================== */
 type Group = {
@@ -38,7 +37,7 @@ const GroupCard = ({ group }: GroupCardProps) => {
   const spotsLeft = group.capacity - group.members;
 
   return (
-    <div className="relative bg-white shadow-lg rounded-2xl p-5 w-72 mx-auto hover:shadow-2xl transition-shadow duration-300 border border-[#e0d8cf]">
+    <div className="relative backdrop-blur-xl bg-white/70 shadow-xl rounded-2xl p-5 hover:shadow-2xl transition-all duration-300 border-2 border-white/60 h-full">
 
       {/* Small Image - Top Left */}
       <div className="absolute -left-4 -top-4 w-20 h-24 rounded-xl overflow-hidden shadow-xl border-4 border-white">
@@ -52,12 +51,12 @@ const GroupCard = ({ group }: GroupCardProps) => {
       </div>
 
       {/* Rank Badge - Top Right */}
-      <div className="absolute -top-3 -right-3 w-9 h-9 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg shadow-lg flex items-center justify-center border-2 border-white">
-        <span className="text-white font-bold text-xs">#{group.rank}</span>
+      <div className="absolute -top-3 -right-3 w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl shadow-lg flex items-center justify-center border-2 border-white">
+        <span className="text-white font-bold text-sm">#{group.rank}</span>
       </div>
 
       {/* Content */}
-      <div className="ml-16 text-right">
+      <div className="ml-16 text-right pt-2">
         <h2 className="text-base text-[#4a3728] font-bold mb-1 leading-tight">{group.title}</h2>
         <p className="text-xs text-[#8b7355] mb-3 flex items-center justify-end gap-1">
           <Award className="w-3 h-3" />
@@ -66,18 +65,18 @@ const GroupCard = ({ group }: GroupCardProps) => {
 
         {/* Stats */}
         <div className="space-y-2 mb-3">
-          <div className="flex items-center justify-between bg-[#fff8f0] px-3 py-1.5 rounded-lg">
+          <div className="flex items-center justify-between backdrop-blur-sm bg-[#fff8f0]/80 px-3 py-2 rounded-lg border border-white/40">
             <div className="flex items-center gap-1.5">
-              <TrendingUp className="w-3.5 h-3.5 text-[#8b7355]" />
-              <span className="text-xs text-[#8b7355]">Attendance</span>
+              <TrendingUp className="w-4 h-4 text-[#8b7355]" />
+              <span className="text-xs text-[#8b7355] font-medium">Attendance</span>
             </div>
             <span className="text-sm font-bold text-[#4a3728]">{group.attendanceAvg}%</span>
           </div>
 
-          <div className="flex items-center justify-between bg-[#fff8f0] px-3 py-1.5 rounded-lg">
+          <div className="flex items-center justify-between backdrop-blur-sm bg-[#fff8f0]/80 px-3 py-2 rounded-lg border border-white/40">
             <div className="flex items-center gap-1.5">
-              <Users className="w-3.5 h-3.5 text-[#8b7355]" />
-              <span className="text-xs text-[#8b7355]">Members</span>
+              <Users className="w-4 h-4 text-[#8b7355]" />
+              <span className="text-xs text-[#8b7355] font-medium">Members</span>
             </div>
             <span className="text-sm font-bold text-[#4a3728]">{group.members}/{group.capacity}</span>
           </div>
@@ -86,18 +85,18 @@ const GroupCard = ({ group }: GroupCardProps) => {
         {/* Status */}
         <div className="mb-3">
           {spotsLeft > 0 ? (
-            <span className="inline-block bg-green-50 text-green-700 font-semibold text-xs px-3 py-1 rounded-full border border-green-200">
+            <span className="inline-block bg-green-500/10 text-green-700 font-semibold text-xs px-3 py-1.5 rounded-full border border-green-500/20">
               {spotsLeft} spots left
             </span>
           ) : (
-            <span className="inline-block bg-red-50 text-red-600 font-semibold text-xs px-3 py-1 rounded-full border border-red-200">
+            <span className="inline-block bg-red-500/10 text-red-600 font-semibold text-xs px-3 py-1.5 rounded-full border border-red-500/20">
               Full
             </span>
           )}
         </div>
 
         {/* Join Button */}
-        <button className="w-full bg-gradient-to-r from-[#4a3728] to-[#8b7355] hover:from-[#6b4e3d] hover:to-[#4a3728] text-white px-4 py-2 rounded-xl font-semibold text-xs shadow-lg hover:shadow-xl transition-all duration-300">
+        <button className="w-full bg-gradient-to-r from-[#8b7355] to-[#6b5847] hover:from-[#6b5847] hover:to-[#4a3728] text-white px-4 py-2.5 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-300 border border-white/20">
           Join Group
         </button>
       </div>
@@ -107,76 +106,30 @@ const GroupCard = ({ group }: GroupCardProps) => {
 
 /* ===================== MAIN PAGE ===================== */
 export default function TopRankedGroups() {
-  const [page, setPage] = useState<number>(0);
-  const perPage = 3;
-  const totalPages = Math.ceil(rankedGroups.length / perPage);
-
-  const current = rankedGroups.slice(page * perPage, page * perPage + perPage);
+  // Show only top 3 ranked groups
+  const topThreeGroups = rankedGroups.slice(0, 3);
 
   return (
-    <div className="py-10 mt-4 px-6">
-      <div className="max-w-6xl mx-auto space-y-10">
+    <div className="py-8 sm:py-10 lg:py-12">
+      <div className="max-w-7xl mx-auto space-y-8 sm:space-y-10">
 
-        {/* Header */}
+        {/* Header - Trophy removed */}
         <div className="text-center space-y-2">
-          <h1 className="text-4xl font-bold text-[#4a3728] flex justify-center items-center gap-3">
-            <Trophy className="text-yellow-500 w-9 h-9" />
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#4a3728]">
             Top Ranked Groups
           </h1>
-          <p className="text-[#6b5847] text-base">
+          <p className="text-[#6b5847] text-sm sm:text-base">
             Join the most active and successful study communities
           </p>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 mt-6">
-          {current.map(group => (
-            <GroupCard key={group.id} group={group} />
+        {/* Cards Grid - Simple 3 column layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 px-4">
+          {topThreeGroups.map(group => (
+            <div key={group.id} className="max-w-[320px] mx-auto w-full">
+              <GroupCard group={group} />
+            </div>
           ))}
-        </div>
-
-        {/* Navigation */}
-        <div className="flex justify-center items-center gap-4 pt-6">
-          <button
-            onClick={() => setPage(p => Math.max(0, p - 1))}
-            disabled={page === 0}
-            className="p-2 rounded-full bg-gradient-to-r from-[#4a3728] to-[#8b7355] text-white disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed hover:scale-110 transition-all shadow-md"
-            aria-label="Previous page"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-
-          {/* Dot Indicators */}
-          <div className="flex gap-1.5">
-            {[...Array(totalPages)].map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setPage(idx)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  page === idx 
-                    ? 'bg-gradient-to-r from-[#4a3728] to-[#8b7355] w-6' 
-                    : 'w-2 bg-[#d4c4b0] hover:bg-[#8b7355]'
-                }`}
-                aria-label={`Go to page ${idx + 1}`}
-              />
-            ))}
-          </div>
-
-          <button
-            onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
-            disabled={page === totalPages - 1}
-            className="p-2 rounded-full bg-gradient-to-r from-[#4a3728] to-[#8b7355] text-white disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed hover:scale-110 transition-all shadow-md"
-            aria-label="Next page"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
-
-        {/* Page Info */}
-        <div className="text-center">
-          <span className="text-xs font-medium text-[#6b5847] bg-white/60 px-3 py-1 rounded-full">
-            Page {page + 1} of {totalPages}
-          </span>
         </div>
       </div>
     </div>

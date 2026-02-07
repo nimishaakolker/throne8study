@@ -1,11 +1,5 @@
-import React from 'react'
+import { redirect } from 'next/navigation'
 
-const StudyPage = () => {
-  return (
-    <div>
-      Groupssssssssssss
-    </div>
-  )
+export default function StudyPage() {
+  redirect('/study/groups')
 }
-
-export default StudyPage

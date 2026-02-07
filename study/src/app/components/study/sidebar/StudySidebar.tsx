@@ -80,6 +80,11 @@ const StudySidebar = () => {
       title: "Community",
       items: [
         {
+          name: "Groups",
+          path: "/study/groups",
+          icon: <GraduationCap size={18} />,
+        },
+        {
           name: "My Groups",
           path: "/study/my-groups",
           icon: <GraduationCap size={18} />,
@@ -119,11 +124,7 @@ const StudySidebar = () => {
     {
       title: "Profile",
       items: [
-        {
-          name: "My Profile",
-          path: "/profile",
-          icon: <User size={18} />,
-        },
+   
         {
           name: "Dashboard",
           path: "/student-dashboard",

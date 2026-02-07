@@ -585,7 +585,10 @@ interface GroupCardProps {
 }
 
 const GroupCard: React.FC<GroupCardProps> = ({ group, onSettingsClick, onOpenClick }) => (
-  <div className="bg-white rounded-lg sm:rounded-xl border-2 border-[#e0d8cf] hover:border-[#8b7355] hover:shadow-lg transition-all duration-200 overflow-hidden">
+  <div 
+    onClick={() => onOpenClick(group.id)}
+    className="bg-white rounded-lg sm:rounded-xl border-2 border-[#e0d8cf] hover:border-[#8b7355] hover:shadow-lg transition-all duration-200 overflow-hidden cursor-pointer"
+  >
     {/* Header */}
     <div className="p-3 sm:p-4 bg-[#f6ede8] border-b border-[#e0d8cf]">
       <div className="flex items-start justify-between mb-2">
@@ -699,25 +702,21 @@ const GroupCard: React.FC<GroupCardProps> = ({ group, onSettingsClick, onOpenCli
       </div>
       <div className="flex gap-1.5 sm:gap-2 flex-shrink-0">
         <button 
-          onClick={() => onSettingsClick(group)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onSettingsClick(group);
+          }}
           className="px-2 sm:px-3 py-1 sm:py-1.5 bg-[#f6ede8] hover:bg-[#e0d8cf] text-[#4a3728] rounded-lg text-[10px] sm:text-xs font-semibold transition-all flex items-center gap-1"
         >
           <Settings size={12} className="sm:w-[14px] sm:h-[14px]" />
           <span className="hidden xs:inline">{group.isCreator ? 'Manage' : 'Info'}</span>
-        </button>
-        <button 
-          onClick={() => onOpenClick(group.id)}
-          className="px-2 sm:px-3 py-1 sm:py-1.5 bg-linear-to-r from-[#8b7355] to-[#6b5847] hover:from-[#6b5847] hover:to-[#4a3728] text-white rounded-lg text-[10px] sm:text-xs font-semibold transition-all flex items-center gap-1"
-        >
-          <MessageCircle size={12} className="sm:w-[14px] sm:h-[14px]" />
-          <span className="hidden xs:inline">Open</span>
         </button>
       </div>
     </div>
   </div>
 );
 
-const MyGroups: React.FC = () => {
+export default function MyGroups() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -963,14 +962,14 @@ const MyGroups: React.FC = () => {
 
             {/* Search Input */}
             <div className="flex-1 relative">
-              <Search className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 text-[#6b5847]" size={16} />
               <input
                 type="text"
                 placeholder="Search groups..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-8 sm:pl-10 pr-3 sm:pr-4 py-1.5 sm:py-2 border-2 border-[#e0d8cf] rounded-lg focus:border-[#8b7355] focus:ring-2 focus:ring-[#8b7355]/30 outline-none text-xs sm:text-sm"
+                className="w-full pl-3 sm:pl-4 pr-8 sm:pr-10 py-1.5 sm:py-2 border-2 border-[#e0d8cf] rounded-lg focus:border-[#8b7355] focus:ring-2 focus:ring-[#8b7355]/30 outline-none text-xs sm:text-sm"
               />
+              <Search className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 text-[#6b5847] pointer-events-none" size={16} />
             </div>
           </div>
         </div>
@@ -1018,6 +1017,4 @@ const MyGroups: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default MyGroups;
+}
