@@ -1,35 +1,29 @@
 import Image from 'next/image';
 import React from 'react';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { setSearchQuery, selectSearchQuery } from '../redux/slices/groupsSlice';
 
 const GroupHeader = () => {
+  const dispatch = useAppDispatch();
+  const searchQuery = useAppSelector(selectSearchQuery);
+
   return (
     <div className="relative overflow-hidden py-4 sm:py-6 lg:py-8">
-      {/* Background decorative elements */}
-      {/* <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-[#8b7355]/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#6b5847]/10 rounded-full blur-3xl animate-pulse delay-700" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#4a3728]/5 rounded-full blur-3xl" />
-      </div> */}
-
       <section className="max-w-7xl mx-auto relative">
-        {/* Main glassmorphism container */}
         <div className="backdrop-blur-2xl bg-white/40 border-2 border-white/60 rounded-3xl shadow-xs overflow-hidden">
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-center justify-between px-6 sm:px-8 lg:px-10 py-6 sm:py-8 lg:py-10 relative">
-            
-            {/* Floating accent bubbles */}
+
             <div className="absolute top-8 left-12 w-20 h-20 bg-gradient-to-br from-[#8b7355]/20 to-[#6b5847]/20 rounded-full blur-2xl animate-pulse" />
             <div className="absolute bottom-16 right-16 w-28 h-28 bg-gradient-to-tl from-[#6b5847]/15 to-[#8b7355]/15 rounded-full blur-2xl animate-pulse delay-300" />
 
             {/* Left – Text + Search + Stats */}
             <div className="flex flex-col gap-4 max-w-xl z-10 w-full lg:w-1/2">
               <div className="space-y-3">
-                {/* Badge */}
                 <div className="inline-flex items-center gap-2 backdrop-blur-xl bg-gradient-to-r from-[#8b7355]/20 to-[#6b5847]/20 px-4 py-2 rounded-full border border-white/40 shadow-lg">
                   <span className="text-2xl">🎓</span>
                   <span className="text-[#4a3728] font-bold text-xs sm:text-sm">Discover & Learn Together</span>
                 </div>
 
-                {/* Heading */}
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#4a3728] leading-tight">
                   Find Your{' '}
                   <span className="block sm:inline bg-gradient-to-r from-[#6b5847] via-[#8b7355] to-[#6b5847] bg-clip-text text-transparent animate-gradient">
@@ -37,17 +31,18 @@ const GroupHeader = () => {
                   </span>
                 </h1>
 
-                {/* Subtitle */}
                 <p className="text-sm sm:text-base text-[#6b5847] font-medium leading-relaxed">
                   Connect with passionate learners, collaborate on projects, and reach your academic goals together.
                 </p>
               </div>
 
-              {/* Search + Button */}
+              {/* Search — now controlled by Redux */}
               <div className="flex flex-col sm:flex-row gap-3">
                 <div className="flex-1 relative group">
                   <input
                     type="text"
+                    value={searchQuery}
+                    onChange={(e) => dispatch(setSearchQuery(e.target.value))}
                     placeholder="Search by topic, university, subject..."
                     className="w-full px-5 py-3.5 rounded-2xl backdrop-blur-xl bg-white/70 text-[#4a3728] border-2 border-white/60 focus:border-[#8b7355] focus:bg-white/90 outline-none transition-all placeholder:text-[#6b5847]/60 shadow-lg hover:shadow-xl text-sm font-medium"
                   />
@@ -62,14 +57,14 @@ const GroupHeader = () => {
                 </button>
               </div>
 
-              {/* Stats with glassmorphism */}
+              {/* Stats */}
               <div className="flex flex-wrap gap-3 mt-2">
                 {[
                   { value: '500+', label: 'Active Groups' },
                   { value: '10K+', label: 'Members' },
-                  { value: '50+', label: 'Subjects' }
+                  { value: '50+', label: 'Subjects' },
                 ].map((stat, index) => (
-                  <div 
+                  <div
                     key={index}
                     className="backdrop-blur-xl bg-white/50 px-5 py-3 rounded-xl border border-white/60 shadow-lg hover:shadow-xl transition-all hover:scale-105 cursor-pointer"
                   >
@@ -84,12 +79,10 @@ const GroupHeader = () => {
               </div>
             </div>
 
-            {/* Right – Video Card with Glassmorphism */}
+            {/* Right – Video Card */}
             <div className="relative w-full lg:w-1/2 max-w-lg z-10">
-              {/* Outer glow effect */}
               <div className="absolute -inset-4 bg-gradient-to-r from-[#8b7355]/20 to-[#6b5847]/20 rounded-3xl blur-2xl" />
-              
-              {/* Main video card */}
+
               <div className="relative backdrop-blur-2xl bg-gradient-to-br from-[#4a3728]/90 to-[#6b5847]/90 p-3 rounded-3xl shadow-2xl border-2 border-white/20">
                 <div className="bg-gradient-to-br from-[#2a1f18] to-[#1a140f] rounded-2xl overflow-hidden aspect-video group relative cursor-pointer">
                   <Image
@@ -98,11 +91,7 @@ const GroupHeader = () => {
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  
-                  {/* Gradient overlays */}
                   <div className="absolute inset-0 bg-gradient-to-br from-[#8b7355]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                  {/* Play button */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
                     <div className="backdrop-blur-xl bg-white/95 hover:bg-white text-[#4a3728] w-20 h-20 rounded-full flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-all border-4 border-white/50">
                       <svg className="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 24 24">
@@ -110,8 +99,6 @@ const GroupHeader = () => {
                       </svg>
                     </div>
                   </div>
-
-                  {/* Bottom info overlay */}
                   <div className="absolute bottom-0 left-0 right-0 p-6 backdrop-blur-sm bg-gradient-to-t from-black/60 to-transparent">
                     <h3 className="text-white font-bold text-lg mb-1">How to Use Study Groups</h3>
                     <div className="flex items-center gap-2">
@@ -122,7 +109,6 @@ const GroupHeader = () => {
                 </div>
               </div>
 
-              {/* Live status badge with glassmorphism */}
               <div className="absolute -bottom-4 -right-4 backdrop-blur-2xl bg-white/80 px-6 py-4 rounded-2xl shadow-2xl border-2 border-white/60 flex items-center gap-3">
                 <div className="relative">
                   <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse" />

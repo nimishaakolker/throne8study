@@ -1,26 +1,58 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import GroupCard from './GroupCard';
-import type { Group } from '../types';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import {
+  toggleSectionExpanded,
+  selectExpandedSections,
+  selectFilteredUniversityGroups,
+  selectFilteredDsaGroups,
+  selectFilteredJeeGroups,
+} from '../redux/slices/groupsSlice';
+import type { Group } from '../types';
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+type SectionKey = 'university' | 'dsa' | 'jee';
 
 interface GroupGridProps {
   title: string;
   subtitle?: string;
-  groups: Group[];
+  /** Which Redux-managed group list to display */
+  sectionKey: SectionKey;
 }
 
-const GroupGrid: React.FC<GroupGridProps> = ({ title, subtitle, groups }) => {
-  const [showAll, setShowAll] = useState(false);
-  
-  // Initial cards to show: 3 on desktop, 2 on mobile
-  const initialDesktopCards = 3;
-  const initialMobileCards = 2;
-  
-  // Determine which cards to display
-  const displayedGroups = showAll ? groups : groups.slice(0, initialDesktopCards);
-  const hasMoreGroups = groups.length > initialDesktopCards;
+// ─── Selector map ─────────────────────────────────────────────────────────────
+
+const INITIAL_DESKTOP_CARDS = 3;
+const INITIAL_MOBILE_CARDS = 2;
+
+// ─── Component ────────────────────────────────────────────────────────────────
+
+const GroupGrid: React.FC<GroupGridProps> = ({ title, subtitle, sectionKey }) => {
+  const dispatch = useAppDispatch();
+
+  // Pick the right filtered selector based on sectionKey
+  const universityGroups = useAppSelector(selectFilteredUniversityGroups);
+  const dsaGroups = useAppSelector(selectFilteredDsaGroups);
+  const jeeGroups = useAppSelector(selectFilteredJeeGroups);
+
+  const groupMap: Record<SectionKey, Group[]> = {
+    university: universityGroups,
+    dsa: dsaGroups,
+    jee: jeeGroups,
+  };
+  const groups = groupMap[sectionKey];
+
+  const expandedSections = useAppSelector(selectExpandedSections);
+  const showAll = expandedSections[sectionKey];
+
+  const displayedGroups = showAll ? groups : groups.slice(0, INITIAL_DESKTOP_CARDS);
+  const hasMoreGroups = groups.length > INITIAL_DESKTOP_CARDS;
+
+  const handleToggle = () => dispatch(toggleSectionExpanded(sectionKey));
 
   return (
     <section>
@@ -30,9 +62,7 @@ const GroupGrid: React.FC<GroupGridProps> = ({ title, subtitle, groups }) => {
           {title}
         </h2>
         {subtitle && (
-          <p className="text-sm sm:text-base text-[#6b5847]/80">
-            {subtitle}
-          </p>
+          <p className="text-sm sm:text-base text-[#6b5847]/80">{subtitle}</p>
         )}
       </div>
 
@@ -40,14 +70,13 @@ const GroupGrid: React.FC<GroupGridProps> = ({ title, subtitle, groups }) => {
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
         {displayedGroups && displayedGroups.length > 0 ? (
           displayedGroups.map((g, index) => (
-            <div 
-              key={g.id} 
-              className={`${
-                // Hide 3rd card on mobile when not showing all
-                !showAll && index >= initialMobileCards ? 'hidden lg:block' : ''
-              }`}
+            <div
+              key={g.id}
+              className={
+                !showAll && index >= INITIAL_MOBILE_CARDS ? 'hidden lg:block' : ''
+              }
             >
-              <GroupCard group={g as Group} />
+              <GroupCard group={g} />
             </div>
           ))
         ) : (
@@ -57,23 +86,17 @@ const GroupGrid: React.FC<GroupGridProps> = ({ title, subtitle, groups }) => {
         )}
       </div>
 
-      {/* Show More/Less Button */}
+      {/* Show More / Show Less */}
       {hasMoreGroups && (
         <div className="flex justify-center mt-8">
           <button
-            onClick={() => setShowAll(!showAll)}
+            onClick={handleToggle}
             className="px-6 py-3 bg-gradient-to-r from-[#8b7355] to-[#6b5847] hover:from-[#6b5847] hover:to-[#4a3728] text-white rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 border border-white/20"
           >
             {showAll ? (
-              <>
-                Show Less
-                <ChevronUp size={18} />
-              </>
+              <>Show Less <ChevronUp size={18} /></>
             ) : (
-              <>
-                Show More
-                <ChevronDown size={18} />
-              </>
+              <>Show More <ChevronDown size={18} /></>
             )}
           </button>
         </div>
