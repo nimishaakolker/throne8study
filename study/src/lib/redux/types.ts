@@ -1,3 +1,4 @@
+// Shared Redux types used across slices
 
 export type GroupTabType = 'all' | 'created' | 'joined';
 

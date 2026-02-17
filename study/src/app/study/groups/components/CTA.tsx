@@ -1,9 +1,9 @@
 "use client";
 
 import { UserPlus, ArrowRight, CheckCircle } from "lucide-react";
-import { CreateModal} from '../../../components/study/modals/CreateModal'
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { openCreateModal, closeCreateModal, selectIsCreateModalOpen } from "../redux/slices/uiSlice";
+import CreateGroupModal from '../../../components/study/modals/CreateModal'
+import { useAppDispatch, useAppSelector } from "../../../../lib/redux/hooks";
+import { openCreateModal, closeCreateModal, selectIsCreateModalOpen } from "../../../../lib/redux/features/groups/groupsSlice";
 
 export default function CTA() {
   const dispatch = useAppDispatch();

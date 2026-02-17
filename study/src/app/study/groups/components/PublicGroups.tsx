@@ -2,12 +2,12 @@
 
 import { Globe, Users } from "lucide-react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../lib/redux/hooks";
 import {
   toggleSectionExpanded,
   selectExpandedSections,
   selectPublicGroups,
-} from "../redux/slices/groupsSlice";
+} from "../../../../lib/redux/features/groups/groupsSlice";
 
 // ─── Card ─────────────────────────────────────────────────────────────────────
 

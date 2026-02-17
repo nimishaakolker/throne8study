@@ -3,14 +3,14 @@
 import React from 'react';
 import GroupCard from './GroupCard';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../lib/redux/hooks';
 import {
   toggleSectionExpanded,
   selectExpandedSections,
   selectFilteredUniversityGroups,
   selectFilteredDsaGroups,
   selectFilteredJeeGroups,
-} from '../redux/slices/groupsSlice';
+} from '../../../../lib/redux/features/groups/groupsSlice';
 import type { Group } from '../types';
 
 // ─── Types ────────────────────────────────────────────────────────────────────

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { setSearchQuery, selectSearchQuery } from '../redux/slices/groupsSlice';
+import { useAppDispatch, useAppSelector } from '../../../../lib/redux/hooks';
+import { setBrowseSearchQuery as setSearchQuery, selectBrowseSearchQuery as selectSearchQuery } from '../../../../lib/redux/features/groups/groupsSlice';
 
 const GroupHeader = () => {
   const dispatch = useAppDispatch();

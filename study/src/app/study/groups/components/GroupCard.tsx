@@ -1,8 +1,8 @@
 import React from 'react';
 import { Users, Clock, Eye, EyeOff, Camera, CameraOff, TrendingUp, Award } from 'lucide-react';
 import type { Group } from '../types';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { joinGroup, leaveGroup, selectJoinedGroupIds } from '../redux/slices/groupsSlice';
+import { useAppDispatch, useAppSelector } from '../../../../lib/redux/hooks';
+import { joinGroup, unjoinGroup, selectJoinedGroupIds } from '../../../../lib/redux/features/groups/groupsSlice';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -35,7 +35,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
 
   const handleJoinLeave = () => {
     if (isJoined) {
-      dispatch(leaveGroup(group.id));
+      dispatch(unjoinGroup(group.id));
     } else if (!isFull) {
       dispatch(joinGroup(group.id));
     }

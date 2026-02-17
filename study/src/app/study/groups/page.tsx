@@ -1,23 +1,21 @@
 "use client";
 
 import React, { useEffect } from 'react';
-import type { Group } from './types';
 import GroupHeader from './components/GroupHeader';
 import GroupGrid from './components/GroupGrid';
 import PublicStudyGroups from './components/PublicGroups';
 import { universityGroups, DSAGroups, JEEGroups } from './data';
 import TopRankedGroups from './components/TopRankedGroups';
 import CTA from './components/CTA';
+import { useAppDispatch } from '../../../lib/redux/hooks';
+import { seedBrowseGroups } from '../../../lib/redux/features/groups/groupsSlice';
+import type { Group } from './types';
 
-import { useAppDispatch } from '../../hooks'; // your existing hooks file
-
-import { seedGroups } from '../../features/groups/groupsSlice';
-
-// Tag each group with its section so the slice can filter by it
-const allItems = [
-  ...universityGroups.map((g) => ({ ...g, section: 'university' as const })),
-  ...(DSAGroups as Group[]).map((g) => ({ ...g, section: 'dsa' as const })),
-  ...(JEEGroups as Group[]).map((g) => ({ ...g, section: 'jee' as const })),
+// Tag each group with its section key for Redux filtering
+const allBrowseItems = [
+  ...universityGroups.map((g: any) => ({ ...g, section: 'university' })),
+  ...(DSAGroups as any[]).map((g: any) => ({ ...g, section: 'dsa' })),
+  ...(JEEGroups as any[]).map((g: any) => ({ ...g, section: 'jee' })),
 ];
 
 const publicGroupsData = [
@@ -32,9 +30,12 @@ const publicGroupsData = [
 const Groups: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  // Seeds data once. On refresh, localStorage data takes over — this becomes a no-op.
+  // Safe one-time seed — no-op if data already in localStorage
   useEffect(() => {
-    dispatch(seedGroups({ items: allItems as any, publicGroups: publicGroupsData }));
+    dispatch(seedBrowseGroups({
+      browseItems: allBrowseItems as Group[],
+      publicGroups: publicGroupsData,
+    }));
   }, [dispatch]);
 
   return (
