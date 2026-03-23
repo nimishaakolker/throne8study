@@ -184,9 +184,9 @@ interface StateWithGroups {
 
 // ─── Selectors — my-groups ────────────────────────────────────────────────────
 
-export const selectGroupItems      = (state: StateWithGroups) => state.groups.items;
-export const selectActiveTab       = (state: StateWithGroups) => state.groups.activeTab;
-export const selectSearchQuery     = (state: StateWithGroups) => state.groups.searchQuery;
+export const selectGroupItems      = (state: StateWithGroups) => state.groups.items          ?? [];
+export const selectActiveTab       = (state: StateWithGroups) => state.groups.activeTab       ?? 'all';
+export const selectSearchQuery     = (state: StateWithGroups) => state.groups.searchQuery     ?? '';
 export const selectSettingsGroupId = (state: StateWithGroups) => state.groups.settingsGroupId;
 export const selectSettingsGroup   = (state: StateWithGroups) =>
   state.groups.items.find(g => g.id === state.groups.settingsGroupId) ?? null;
@@ -197,8 +197,9 @@ export const selectFilteredGroups = createSelector(
     let result = items;
     if (activeTab === 'created') result = result.filter(g => g.isCreator);
     if (activeTab === 'joined')  result = result.filter(g => !g.isCreator);
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
+    const safeSearch = searchQuery ?? '';
+    if (safeSearch.trim()) {
+      const q = safeSearch.toLowerCase();
       result = result.filter(
         g => g.title.toLowerCase().includes(q) || g.category.toLowerCase().includes(q)
       );
@@ -212,15 +213,16 @@ export const selectFilteredGroups = createSelector(
 export const selectBrowseItems       = (state: StateWithGroups) => state.groups.browseItems ?? [];
 export const selectPublicGroups      = (state: StateWithGroups) => state.groups.publicGroups;
 export const selectJoinedGroupIds    = (state: StateWithGroups) => state.groups.joinedGroupIds;
-export const selectBrowseSearchQuery = (state: StateWithGroups) => state.groups.browseSearchQuery;
+export const selectBrowseSearchQuery = (state: StateWithGroups) => state.groups.browseSearchQuery ?? '';
 export const selectIsCreateModalOpen = (state: StateWithGroups) => state.groups.isCreateModalOpen;
 export const selectExpandedSections  = (state: StateWithGroups) => state.groups.expandedSections;
 
 const filterBySection = (items: Group[], section: string, query: string): Group[] => {
   if (!items || !Array.isArray(items)) return [];
+  const safeQuery = query ?? '';
   let result = items.filter(g => (g as any).section === section);
-  if (query.trim()) {
-    const q = query.toLowerCase();
+  if (safeQuery.trim()) {
+    const q = safeQuery.toLowerCase();
     result = result.filter(
       g => g.title.toLowerCase().includes(q) ||
            g.category.toLowerCase().includes(q) ||

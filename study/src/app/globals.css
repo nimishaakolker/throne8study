@@ -1,3 +1,37 @@
 @import "tailwindcss";
 
+/* ── Base ────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
 
+body {
+  background-color: #f7f3ee;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ── Hide all scrollbars (keep scroll functionality) */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Utility ─────────────────────────────────────── */
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Safe area for bottom nav on notched phones ──── */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}

@@ -46,16 +46,17 @@ const Groups: React.FC = () => {
           <GroupHeader />
         </div>
 
-        <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16 py-3 sm:py-6 md:py-8 lg:py-10">
-          <TopRankedGroups />
-        </div>
-
+        {/* University Groups — above TopRanked */}
         <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16 py-3 sm:py-6 md:py-8">
           <GroupGrid
             title="University Groups"
             subtitle="Find Friends from your College"
             sectionKey="university"
           />
+        </div>
+
+        <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16 py-3 sm:py-6 md:py-8 lg:py-10">
+          <TopRankedGroups />
         </div>
 
         <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16 py-3 sm:py-6 md:py-8">
@@ -70,7 +71,7 @@ const Groups: React.FC = () => {
           />
         </div>
 
-        <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16 py-3 sm:py-6 md:py-8 lg:py-10">
+        <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16 py-3 sm:py-6 md:py-8">
           <CTA />
         </div>
 

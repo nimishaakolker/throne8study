@@ -184,10 +184,43 @@ const StudySidebar = () => {
 
   return (
     <>
-      {/* MOBILE TOGGLE BUTTON - Fixed at top */}
+      {/* MOBILE TAB SLIDER — fixed above bottom nav, hidden on lg */}
+      <div
+        className="lg:hidden fixed left-0 right-0 z-30 bg-[#f7f3ee]/95 backdrop-blur-xl border-b border-[#e0d4c0]"
+        style={{ top: 0 }}
+      >
+        <div className="flex items-center gap-0 overflow-x-auto px-2 pt-2 pb-1.5" style={{ scrollbarWidth: 'none' }}>
+          {[
+            { label: 'Groups',    path: '/study/groups',    emoji: '👥' },
+            { label: 'My Groups', path: '/study/my-groups', emoji: '🏠' },
+            { label: 'Timer',     path: '/study/timer',     emoji: '⏱' },
+            { label: 'Goals',     path: '/study/goals',     emoji: '🎯' },
+            { label: 'Todo',      path: '/study/todo',      emoji: '✅' },
+            { label: 'Dashboard', path: '/student-dashboard', emoji: '📊' },
+          ].map((tab) => {
+            const isActive = pathname === tab.path || pathname.startsWith(tab.path + '/');
+            return (
+              <button
+                key={tab.path}
+                onClick={() => router.push(tab.path)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all active:scale-95 shrink-0 mr-1.5
+                  ${isActive
+                    ? 'bg-[#4a3728] text-white shadow-sm'
+                    : 'bg-white/70 text-[#4a3728]/70 border border-[#e0d4c0]'
+                  }`}
+              >
+                <span className="text-sm">{tab.emoji}</span>
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* MOBILE TOGGLE BUTTON - hidden on mobile (tab slider handles it), shown on md tablet only */}
       <button
         onClick={() => setIsMobileSidebarOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-40 p-3 bg-[#4a3728] text-white rounded-xl shadow-lg hover:bg-[#5a4738] transition-colors"
+        className="hidden md:flex lg:hidden fixed top-16 left-4 z-40 p-3 bg-[#4a3728] text-white rounded-xl shadow-lg hover:bg-[#5a4738] transition-colors items-center justify-center"
         aria-label="Open sidebar"
       >
         <Menu size={24} />
