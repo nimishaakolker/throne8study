@@ -214,13 +214,15 @@ export const selectPublicGroups      = (state: StateWithGroups) => state.groups.
 export const selectJoinedGroupIds    = (state: StateWithGroups) => state.groups.joinedGroupIds;
 export const selectBrowseSearchQuery = (state: StateWithGroups) => state.groups.browseSearchQuery;
 export const selectIsCreateModalOpen = (state: StateWithGroups) => state.groups.isCreateModalOpen;
-export const selectExpandedSections  = (state: StateWithGroups) => state.groups.expandedSections;
+export const selectExpandedSections  = (state: StateWithGroups) =>
+  state.groups.expandedSections ?? initialState.expandedSections;
 
 const filterBySection = (items: Group[], section: string, query: string): Group[] => {
   if (!items || !Array.isArray(items)) return [];
+  const normalizedQuery = typeof query === 'string' ? query : '';
   let result = items.filter(g => (g as any).section === section);
-  if (query.trim()) {
-    const q = query.toLowerCase();
+  if (normalizedQuery.trim()) {
+    const q = normalizedQuery.toLowerCase();
     result = result.filter(
       g => g.title.toLowerCase().includes(q) ||
            g.category.toLowerCase().includes(q) ||
