@@ -2,9 +2,9 @@ import { RootState } from './store';
 import { createSelector } from '@reduxjs/toolkit';
 
 // ============ GOALS SELECTORS ============
-export const selectAllGoals = (state: RootState) => state.goals.items;
-export const selectGoalsFilter = (state: RootState) => state.goals.filter;
-export const selectGoalsSearchQuery = (state: RootState) => state.goals.searchQuery;
+export const selectAllGoals         = (state: RootState) => state.goals.items        ?? [];
+export const selectGoalsFilter      = (state: RootState) => state.goals.filter       ?? 'all';
+export const selectGoalsSearchQuery = (state: RootState) => state.goals.searchQuery  ?? '';
 
 export const selectFilteredGoals = createSelector(
   [selectAllGoals, selectGoalsFilter, selectGoalsSearchQuery],
@@ -17,8 +17,9 @@ export const selectFilteredGoals = createSelector(
       filtered = filtered.filter(goal => goal.completedAt);
     }
 
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
+    const safeQuery = searchQuery ?? '';
+    if (safeQuery.trim()) {
+      const query = safeQuery.toLowerCase();
       filtered = filtered.filter(goal =>
         goal.title.toLowerCase().includes(query) ||
         goal.labels.some(label => label.name.toLowerCase().includes(query))
